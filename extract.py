@@ -24,23 +24,8 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    print ('load neos function called')
-    output = []
     # TODO: Load NEO data from the given CSV file.
-    with open(neo_csv_path, 'r') as fileObject:
-        reader = csv.DictReader(fileObject)
-        for elem in reader:
-            diameterValue = float('nan')
-            nameValue = None
-            if (elem['diameter'] != '' and elem['diameter'] != None):
-                diameterValue = float(elem['diameter'])
-            if (elem['name'] != '' and elem['name'] != None):
-                nameValue = elem['name']
-            output.append(NearEarthObject(
-                pdesignation = elem['pdes'], name = nameValue,
-                hazardous = elem['pha'], diameter = diameterValue))
-    print ('neos data loaded')
-    return output
+    return ()
 
 
 def load_approaches(cad_json_path):
@@ -49,16 +34,5 @@ def load_approaches(cad_json_path):
     :param neo_csv_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    """         {'pdes':elem['pdes'], 'name': elem['name'], 'phs': elem['pha'], 'diameter': elem['diameter']} """
-    print ('load approaches function called')
-    closeApproach = []
-    # TODO: Load NEO data from the given CSV file.
-    with open(cad_json_path, 'r') as fileObject:
-        approachesObj = json.load(fileObject)
-        for approach in approachesObj['data']:
-            closeApproach.append(CloseApproach(
-                approach[0], time=approach[3],
-                distance=float(approach[4]), velocity=float(approach[7])))
-    print ('approaches data loaded')
-    return closeApproach
     # TODO: Load close approach data from the given JSON file.
+    return ()
