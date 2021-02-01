@@ -39,21 +39,51 @@ class NearEarthObject:
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
 
-        self.designation = designation
-        self.name =name
-        self.diameter = diameter
-        if hazardous.upper() == 'Y':
+        self._designation = designation
+
+        if name:
+            self.name = name
+        else:
+            self.name = None
+
+        if diameter:
+            self.diameter = float(diameter)
+        else:
+            self.diameter = float('nan')
+
+        if hazardous == 'Y':
             self.hazardous = True
         else:
             self.hazardous = False
 
-        self.approaches = []
+        self.approaches = list()
+
+    @property
+    def neo_name(self):
+        return self.name
+
+    def append(self, item):
+        if type(item) == CloseApproach:
+            self.approaches.append(item)
+
 
     @property
     def fullname(self):
         """Return a representation of the full name of this NEO."""
         return f"{self.designation} {self.name}" \
             if (self.name != '' and isinstance(self.name,str)) else f"{self.designation}"
+
+    def __getitem__(self, index):
+        return self[index]
+
+    @property
+    def designation(self):
+        return self._designation
+
+    @property
+    def time_str(self):
+        return datetime_to_str(self.time)
+
 
     def __str__(self):
         """Return `str(self)`."""
@@ -87,33 +117,42 @@ class CloseApproach:
         """
 
         self._designation = designation
-        self.time = cd_to_datetime(time)
-        self.distance = distance
-        self.velocity = velocity
+        if type(time) == str:
+            self.time = cd_to_datetime(time)
 
-        self.neo = None
+        if type(distance) == float:
+            self.distance = distance
+        else:
+            self.distance = float(distance)
+
+        if type(velocity) == float:
+            self.velocity = velocity
+        else:
+            self.velocity = float(velocity)
+
+        if neo:
+            self.neo = neo
+        else:
+            self.neo = None
+
+    def __getitem__(self, index):
+        return self[index]
+
+    @property
+    def designation(self):
+        return self._designation
 
     @property
     def time_str(self):
-        """Return a formatted representation of this `CloseApproach`'s approach time.
-
-        The value in `self.time` should be a Python `datetime` object. While a
-        `datetime` object has a string representation, the default representation
-        includes seconds - significant figures that don't exist in our input
-        data set.
-
-        The `datetime_to_str` method converts a `datetime` object to a
-        formatted string that can be used in human-readable representations and
-        in serialization to CSV and JSON files.
-        """
         return datetime_to_str(self.time)
 
+    def attach(self, neo):
+        if type(neo) == NearEarthObject:
+            self.neo = neo
+
     def __str__(self):
-        """Return `str(self)`."""
-        return f"At {self.time_str}, '{self._designation}' approached earch at a distance of {self.distance:.2f} au " \
-               f"and a velocity of {self.velocity: .2f} km/s. Hazardous: {self.neo.hazardous}"
+        return f"At {self.time_str}, '{self.designation}' approaches Earth at a distance of {self.distance:.2f} au and a velocity of {self.velocity:.2f} km/s. Hazardous: {self.neo.hazardous}"
 
     def __repr__(self):
-        """Return `repr(self)`, a computer-readable string representation of this object."""
         return (f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
-                f"velocity={self.velocity:.2f}, neo={self.neo!r})")
+                f"velocity={self.velocity:.2f})")

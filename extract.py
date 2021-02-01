@@ -14,6 +14,7 @@ You'll edit this file in Task 2.
 """
 import csv
 import json
+import pathlib
 
 from models import NearEarthObject, CloseApproach
 
@@ -47,3 +48,4 @@ def load_approaches(cad_json_path):
             output.append(CloseApproach(approach[0],time=approach[3],distance=float(approach[4]),velocity=float(approach[7])))
 
     return output
+
