@@ -182,6 +182,6 @@ def limit(iterator, n=None):
     :yield: The first (at most) `n` values from the iterator.
     """
     if n == 0:
-        return None
+        n = None
 
     return islice(iterator, n)
