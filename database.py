@@ -38,12 +38,25 @@ class NEODatabase:
         :param neos: A collection of `NearEarthObject`s.
         :param approaches: A collection of `CloseApproach`es.
         """
+
+        neos.sort(key=lambda x: x.designation)
+        approaches.sort(key=lambda x: x.designation)
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
+        i = 0
+        j = 0
 
-        # TODO: Link together the NEOs and their close approaches.
+        while i < len(neos) and j < len(approaches):
+            neo = neos[i]
+            approach = approaches[j]
+            if neo.designation == approach.designation:
+                neo.append(approach)
+                approach.attach(neo)
+                j += 1
+            else:
+                i += 1
+
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
@@ -58,7 +71,11 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
+
+
+        for neo in self._neos:
+            if neo.designation == designation:
+                return neo
         return None
 
     def get_neo_by_name(self, name):
@@ -75,7 +92,10 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
+
+        for neo in self._neos:
+            if neo.neo_name == name:
+                return neo
         return None
 
     def query(self, filters=()):
@@ -92,6 +112,7 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
         for approach in self._approaches:
-            yield approach
+            flag = False in map(lambda f: f(approach), filters)
+            if flag == False:
+                yield approach

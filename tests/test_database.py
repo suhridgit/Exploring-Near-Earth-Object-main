@@ -44,11 +44,6 @@ class TestDatabase(unittest.TestCase):
         approaches = set()
         for neo in self.neos:
             approaches.update(neo.approaches)
-        with open('selfApproaches.txt', 'w') as f:
-            print(set(self.approaches), file=f)  
-        with open('neoApproaches.txt', 'w') as f:
-            print(approaches, file=f)  
-        
         self.assertEqual(approaches, set(self.approaches))
 
     def test_database_construction_ensures_neos_mutually_exclude_approaches(self):
