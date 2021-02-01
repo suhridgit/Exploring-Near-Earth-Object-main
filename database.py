@@ -99,7 +99,7 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
- 
+
         for neo in self._neos:
             if neo.designation == designation:
                 return neo
