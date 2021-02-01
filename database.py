@@ -68,23 +68,32 @@ class NEODatabase:
         :param neos: A collection of `NearEarthObject`s.
         :param approaches: A collection of `CloseApproach`es.
         """
-        neos.sort(key=lambda x: x.designation)
-        approaches.sort(key=lambda x: x.designation)
-        self._neos = neos
-        self._approaches = approaches
+        # neos.sort(key=lambda x: x.designation)
+        # approaches.sort(key=lambda x: x.designation)
 
-        i = 0
-        j = 0
+        # self._neos = neos
+        # self._approaches = approaches
+        #
+        # i = 0
+        # j = 0
+        #
+        # while i < len(neos) and j < len(approaches):
+        #     neo = neos[i]
+        #     approach = approaches[j]
+        #     if neo.designation == approach.designation:
+        #         neo.append(approach)
+        #         approach.attach(neo)
+        #         j += 1
+        #     else:
+        #         i += 1
 
-        while i < len(neos) and j < len(approaches):
-            neo = neos[i]
-            approach = approaches[j]
-            if neo.designation == approach.designation:
-                neo.append(approach)
-                approach.attach(neo)
-                j += 1
-            else:
-                i += 1
+        self.neos_name_dict = {}
+        self.neos_designation_dict = {}
+        self._neos, self._approaches = get_linked_approaches_neos(neos, approaches)
+        for neo in self._neos:
+            if neo.name:
+                self.neos_name_dict[neo.name] = neo
+            self.neos_designation_dict[neo.designation] = neo
 
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
