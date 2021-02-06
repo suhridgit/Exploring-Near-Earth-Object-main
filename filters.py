@@ -187,7 +187,7 @@ def limit(iterator, n=None):
     """
 
     if n == 0:
-        return None
+        n = None
 
     return islice(iterator, n)
 
