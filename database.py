@@ -43,7 +43,6 @@ def get_linked_approaches_neos(neos, approaches):
     return (neoList.values(), approachList)
 
 
-
 class NEODatabase:
     """A database of near-Earth objects and their close approaches.
 
@@ -108,8 +107,6 @@ class NEODatabase:
                 self.neos_name_dict[neo.name] = neo
             self.neos_designation_dict[neo.designation] = neo
 
-
-
     def get_neo_by_designation(self, designation):
         """Find and return an NEO by its primary designation.
 
@@ -124,7 +121,6 @@ class NEODatabase:
         :return: The `NearEarthObject`
         with the desired primary designation, or `None`
         """
-
 
         for neo in self._neos:
             if neo.designation == designation:
