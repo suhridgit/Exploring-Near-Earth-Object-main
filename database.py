@@ -76,8 +76,10 @@ class NEODatabase:
         each close approach references
         the appropriate NEO.
 
-        :param neos: A collection of `NearEarthObject`s.
-        :param approaches: A collection of `CloseApproach`es.
+        :param neos: A collection
+        of `NearEarthObject`s.
+        :param approaches: A collection
+         of `CloseApproach`es.
         """
         # neos.sort(key=lambda x: x.designation)
         # approaches.sort(key=lambda x: x.designation)
