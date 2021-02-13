@@ -36,7 +36,6 @@ class NearEarthObject:
     `NEODatabase` constructor.
     """
 
-
     def __init__(self, designation='',
                  name=None,
                  diameter=float('nan'),
@@ -89,9 +88,16 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f'A NearEarthObject {self.fullname} ' \
-               f'has a diameter of {self.diameter: .3f} km and  ' \
-               f'{  "is" if self.hazardous else "is not "} hazardous'
+        a = "A NEO"
+        dia = "has a diameter of"
+        k = "km and"
+        haz = "hazardous"
+        if self.hazardous:
+            x = "is"
+        else:
+            x = "is not"
+
+        return f'{a} {self.fullname} {dia} {self.diameter: .3f} {k} {x} {haz}'
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable
@@ -139,8 +145,6 @@ class CloseApproach:
                  velocity,
                  neo=None):
 
-
-
         self._designation = designation
         if type(time) == str:
             self.time = cd_to_datetime(time)
@@ -163,7 +167,6 @@ class CloseApproach:
     def __getitem__(self, index):
         return self[index]
 
-
     @property
     def designation(self):
         return self._designation
@@ -171,7 +174,6 @@ class CloseApproach:
     @property
     def time_str(self):
         return datetime_to_str(self.time)
-
 
     def attach(self, neo):
         if type(neo) == NearEarthObject:
@@ -183,7 +185,6 @@ class CloseApproach:
                f"distance of {self.distance:.2f} au " \
                f"and a velocity of {self.velocity:.2f} km/s. " \
                f"Hazardous: {self.neo.hazardous}"
-
 
     def __repr__(self):
         return (f"CloseApproach(time={self.time_str!r}, "

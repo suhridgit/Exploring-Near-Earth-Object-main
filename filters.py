@@ -82,7 +82,6 @@ class AttributeFilter:
                f"(op=operator.{self.op.__name__}, value={self.value})"
 
 
-
 class DistanceFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
@@ -111,7 +110,6 @@ class HazardousFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
-
 
 
 def create_filters(date=None, start_date=None, end_date=None,
@@ -200,7 +198,6 @@ def create_filters(date=None, start_date=None, end_date=None,
     return filters
 
 
-
 def limit(iterator, n=None):
     """Produce a limited stream of values from an iterator.
 
@@ -215,4 +212,3 @@ def limit(iterator, n=None):
         n = None
 
     return islice(iterator, n)
-
